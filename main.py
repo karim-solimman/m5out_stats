@@ -74,6 +74,7 @@ if __name__ == "__main__":
         if "system.ruby.network.packets_received::total" in line:
             print(line.split())
             data.append(float(line.split()[1]))
+    print(data)
     for i in range(1, len(data) - 2):
         data[i] = data[i] / 500
     print(data)
