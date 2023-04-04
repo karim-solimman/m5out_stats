@@ -4,7 +4,7 @@ import os
 if __name__ == "__main__":
     
     parser = argparse.ArgumentParser(description="Program to collect the output data from gem5 output file and combine it into excel file")
-    parser.add_argument("--injectionrate", help="Provie injectionrate")
+    parser.add_argument("--injectionrate", help="Provie injectionrate", default=0.02)
     args = parser.parse_args()
     
     # open the Excel file that will store the data
@@ -68,7 +68,13 @@ if __name__ == "__main__":
                 print(tmp)
                 avg = (float(line.split()[2]) + float(line.split()[4]) + float(tmp)) / 3.0
             data.append(avg)
-    for i in range(1, len(data)):
+        if "system.ruby.network.packets_injected::total" in line:
+            print(line.split())
+            data.append(float(line.split()[1]))
+        if "system.ruby.network.packets_received::total" in line:
+            print(line.split())
+            data.append(float(line.split()[1]))
+    for i in range(1, len(data) - 2):
         data[i] = data[i] / 500
     print(data)
     print(len(data))
