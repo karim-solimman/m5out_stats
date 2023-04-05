@@ -75,9 +75,9 @@ if __name__ == "__main__":
             print(line.split())
             data.append(float(line.split()[1]))
     print(data)
-    for i in range(1, len(data) - 2):
-        data[i] = data[i] / 500
-    print(data)
+    # for i in range(1, len(data) - 2):
+        # data[i] = data[i] / 500
+    # print(data)
     print(len(data))
     # print(work_sheet.cell(row=2, column=1).value)
     work_sheet.append(data)
