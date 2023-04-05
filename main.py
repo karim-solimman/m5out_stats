@@ -77,7 +77,7 @@ if __name__ == "__main__":
     print(data)
     for i in range(1, len(data) - 2):
         data[i] = data[i] / 500
-    data.append(data[len(data-1)]/27/10000)
+    data.append(data[len(data)-1]/27/10000)
     print(data)
     print(len(data))
     # print(work_sheet.cell(row=2, column=1).value)
