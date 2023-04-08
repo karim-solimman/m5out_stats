@@ -8,7 +8,7 @@ if __name__ == "__main__":
     parser.add_argument("--synthetic", help="Provide synthetic traffic because the different out format file", default="triba27_uniform_random")
     args = parser.parse_args()
     
-    assert(args.synthetic == "triba27_uniform_random" or args.synthetic == "triba27_bit_reverse" or args.synthetic == "triba27_transpose")
+    assert(args.synthetic == "triba27_uniform_random" or args.synthetic == "triba27_bit_reverse" or args.synthetic == "triba27_transpose" or args.synthetic == "triba27_tornado")
 
     # open the Excel file that will store the data
     work_book = openpyxl.load_workbook("/home/soliman/m5out_stats/m5out_stats.xlsx")
@@ -231,6 +231,8 @@ if __name__ == "__main__":
         data.append("triba27_bit_reverse")
     elif args.synthetic == "triba27_transpose":
         data.append("triba27_transpose")
+    elif args.synthetic == "triba27_tornado":
+        data.append("triba27_tornado")
     print(data)
     print(len(data))
     work_sheet.append(data)
