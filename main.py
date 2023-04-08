@@ -4,9 +4,12 @@ import os
 if __name__ == "__main__":
     
     parser = argparse.ArgumentParser(description="Program to collect the output data from gem5 output file and combine it into excel file")
-    parser.add_argument("--injectionrate", help="Provie injectionrate", default=0.02)
+    parser.add_argument("--injectionrate", help="Provide injectionrate", default=0.02)
+    parser.add_argument("--synthetic", help="Provide synthetic traffic because the different out format file", default="triba27_uniform_random")
     args = parser.parse_args()
     
+    assert(args.synthetic == "triba27_uniform_random" or args.synthetic == "triba27_bit_reverse" or args.synthetic == "triba27_transpose")
+
     # open the Excel file that will store the data
     work_book = openpyxl.load_workbook("/home/soliman/m5out_stats/m5out_stats.xlsx")
     work_sheet = work_book["Sheet1"]
@@ -17,70 +20,219 @@ if __name__ == "__main__":
     print(os. getcwd())
     m5_file = open("/home/soliman/gem5/m5out/stats.txt")
     # m5_file = open("/home/soliman/gem5_original/gem5/m5out/stats.txt") #File for simulating mesh topology in original gem5
-    for line in m5_file:
-        if "average_flit_latency" in line:
-            print(line.split())
-            data.append(float(line.split()[1]))
-        if "average_flit_network_latency" in line:
-            print(line.split())
-            data.append(float(line.split()[1]))
-        if "average_flit_queueing_latency" in line:
-            print(line.split())
-            data.append(float(line.split()[1]))
-        if "average_flit_vnet_latency" in line:
-            print(line.split())
-            if len(line.split()) == 8:
-                avg = (float(line.split()[2]) + float(line.split()[4]) + float(line.split()[6])) / 3.0
-            elif len(line.split()) == 5:
-                avg = 0
-                for i in range(1, 4):
-                    tmp = line.split()[i]
+    
+    if args.synthetic == "triba27_uniform_random":
+        for line in m5_file:
+            if "average_flit_latency" in line:
+                print(line.split())
+                data.append(float(line.split()[1]))
+            if "average_flit_network_latency" in line:
+                print(line.split())
+                data.append(float(line.split()[1]))
+            if "average_flit_queueing_latency" in line:
+                print(line.split())
+                data.append(float(line.split()[1]))
+            if "average_flit_vnet_latency" in line:
+                print(line.split())
+                if len(line.split()) == 8:
+                    avg = (float(line.split()[2]) + float(line.split()[4]) + float(line.split()[6])) / 3.0
+                elif len(line.split()) == 5:
+                    avg = 0
+                    for i in range(1, 4):
+                        tmp = line.split()[i]
+                        tmp = tmp[1:]
+                        avg += float(tmp)
+                else:
+                    tmp = line.split()[5]
                     tmp = tmp[1:]
-                    avg += float(tmp)
-            else:
-                tmp = line.split()[5]
-                tmp = tmp[1:]
-                print(tmp)
-                avg = (float(line.split()[2]) + float(line.split()[4]) + float(tmp)) / 3.0
-            data.append(avg)
-        if "average_packet_latency" in line:
-            print(line.split())
-            data.append(float(line.split()[1]))
-        if "average_packet_network_latency" in line:
-            print(line.split())
-            data.append(float(line.split()[1]))
-        if "average_packet_queueing_latency" in line:
-            print(line.split())
-            data.append(float(line.split()[1]))
-        if "average_packet_vnet_latency" in line:
-            print(line.split())
-            if len(line.split()) == 8:
-                avg = (float(line.split()[2]) + float(line.split()[4]) + float(line.split()[6])) / 3.0
-            elif len(line.split()) == 5:
-                avg = 0
-                for i in range(1, 4):
-                    tmp = line.split()[i]
+                    print(tmp)
+                    avg = (float(line.split()[2]) + float(line.split()[4]) + float(tmp)) / 3.0
+                data.append(avg)
+            if "average_packet_latency" in line:
+                print(line.split())
+                data.append(float(line.split()[1]))
+            if "average_packet_network_latency" in line:
+                print(line.split())
+                data.append(float(line.split()[1]))
+            if "average_packet_queueing_latency" in line:
+                print(line.split())
+                data.append(float(line.split()[1]))
+            if "average_packet_vnet_latency" in line:
+                print(line.split())
+                if len(line.split()) == 8:
+                    avg = (float(line.split()[2]) + float(line.split()[4]) + float(line.split()[6])) / 3.0
+                elif len(line.split()) == 5:
+                    avg = 0
+                    for i in range(1, 4):
+                        tmp = line.split()[i]
+                        tmp = tmp[1:]
+                        avg += float(tmp)
+                else:
+                    tmp = line.split()[5]
                     tmp = tmp[1:]
-                    avg += float(tmp)
-            else:
-                tmp = line.split()[5]
-                tmp = tmp[1:]
-                print(tmp)
-                avg = (float(line.split()[2]) + float(line.split()[4]) + float(tmp)) / 3.0
-            data.append(avg)
-        if "system.ruby.network.packets_injected::total" in line:
-            print(line.split())
-            data.append(float(line.split()[1]))
-        if "system.ruby.network.packets_received::total" in line:
-            print(line.split())
-            data.append(float(line.split()[1]))
+                    print(tmp)
+                    avg = (float(line.split()[2]) + float(line.split()[4]) + float(tmp)) / 3.0
+                data.append(avg)
+            if "system.ruby.network.packets_injected::total" in line:
+                print(line.split())
+                data.append(float(line.split()[1]))
+            if "system.ruby.network.packets_received::total" in line:
+                print(line.split())
+                data.append(float(line.split()[1]))
+    
+    elif args.synthetic == "triba27_bit_reverse":
+        for line in m5_file:
+            if "average_flit_latency" in line:
+                print(line.split())
+                data.append(float(line.split()[1]))
+            if "average_flit_network_latency" in line:
+                print(line.split())
+                data.append(float(line.split()[1]))
+            if "average_flit_queueing_latency" in line:
+                print(line.split())
+                data.append(float(line.split()[1]))
+            if "average_flit_vnet_latency" in line:
+                print(line.split())
+                if len(line.split()) == 8:
+                    avg = (float(line.split()[2]) + float(line.split()[4]) + float(line.split()[6])) / 3.0
+                elif len(line.split()) == 5:
+                    avg = 0
+                    for i in range(1, 4):
+                        tmp = line.split()[i]
+                        tmp = tmp[1:]
+                        avg += float(tmp)
+                elif len(line.split()) == 6:
+                    avg = float(line.split()[2])
+                    for i in range(3, 5):
+                        tmp = line.split()[i]
+                        tmp = tmp[1:]
+                        avg += float(tmp)
+                else:
+                    tmp = line.split()[5]
+                    tmp = tmp[1:]
+                    print(tmp)
+                    avg = (float(line.split()[2]) + float(line.split()[4]) + float(tmp)) / 3.0
+                data.append(avg)
+            if "average_packet_latency" in line:
+                print(line.split())
+                data.append(float(line.split()[1]))
+            if "average_packet_network_latency" in line:
+                print(line.split())
+                data.append(float(line.split()[1]))
+            if "average_packet_queueing_latency" in line:
+                print(line.split())
+                data.append(float(line.split()[1]))
+            if "average_packet_vnet_latency" in line:
+                print(line.split())
+                if len(line.split()) == 8:
+                    avg = (float(line.split()[2]) + float(line.split()[4]) + float(line.split()[6])) / 3.0
+                elif len(line.split()) == 5:
+                    avg = 0
+                    for i in range(1, 4):
+                        tmp = line.split()[i]
+                        tmp = tmp[1:]
+                        avg += float(tmp)
+                elif len(line.split()) == 6:
+                    avg = float(line.split()[2])
+                    for i in range(3, 5):
+                        tmp = line.split()[i]
+                        tmp = tmp[1:]
+                        avg += float(tmp)
+                else:
+                    tmp = line.split()[5]
+                    tmp = tmp[1:]
+                    print(tmp)
+                    avg = (float(line.split()[2]) + float(line.split()[4]) + float(tmp)) / 3.0
+                data.append(avg)
+            if "system.ruby.network.packets_injected::total" in line:
+                print(line.split())
+                data.append(float(line.split()[1]))
+            if "system.ruby.network.packets_received::total" in line:
+                print(line.split())
+                data.append(float(line.split()[1]))
+                
+    elif args.synthetic == "triba27_transpose":
+        for line in m5_file:
+            if "average_flit_latency" in line:
+                print(line.split())
+                data.append(float(line.split()[1]))
+            if "average_flit_network_latency" in line:
+                print(line.split())
+                data.append(float(line.split()[1]))
+            if "average_flit_queueing_latency" in line:
+                print(line.split())
+                data.append(float(line.split()[1]))
+            if "average_flit_vnet_latency" in line:
+                print(line.split())
+                if len(line.split()) == 8:
+                    avg = (float(line.split()[2]) + float(line.split()[4]) + float(line.split()[6])) / 3.0
+                elif len(line.split()) == 5:
+                    avg = 0
+                    for i in range(1, 4):
+                        tmp = line.split()[i]
+                        tmp = tmp[1:]
+                        avg += float(tmp)
+                elif len(line.split()) == 6:
+                    avg = float(line.split()[2])
+                    for i in range(3, 5):
+                        tmp = line.split()[i]
+                        tmp = tmp[1:]
+                        avg += float(tmp)
+                else:
+                    tmp = line.split()[5]
+                    tmp = tmp[1:]
+                    print(tmp)
+                    avg = (float(line.split()[2]) + float(line.split()[4]) + float(tmp)) / 3.0
+                data.append(avg)
+            if "average_packet_latency" in line:
+                print(line.split())
+                data.append(float(line.split()[1]))
+            if "average_packet_network_latency" in line:
+                print(line.split())
+                data.append(float(line.split()[1]))
+            if "average_packet_queueing_latency" in line:
+                print(line.split())
+                data.append(float(line.split()[1]))
+            if "average_packet_vnet_latency" in line:
+                print(line.split())
+                if len(line.split()) == 8:
+                    avg = (float(line.split()[2]) + float(line.split()[4]) + float(line.split()[6])) / 3.0
+                elif len(line.split()) == 5:
+                    avg = 0
+                    for i in range(1, 4):
+                        tmp = line.split()[i]
+                        tmp = tmp[1:]
+                        avg += float(tmp)
+                elif len(line.split()) == 6:
+                    avg = float(line.split()[2])
+                    for i in range(3, 5):
+                        tmp = line.split()[i]
+                        tmp = tmp[1:]
+                        avg += float(tmp)
+                else:
+                    tmp = line.split()[5]
+                    tmp = tmp[1:]
+                    print(tmp)
+                    avg = (float(line.split()[2]) + float(line.split()[4]) + float(tmp)) / 3.0
+                data.append(avg)
+            if "system.ruby.network.packets_injected::total" in line:
+                print(line.split())
+                data.append(float(line.split()[1]))
+            if "system.ruby.network.packets_received::total" in line:
+                print(line.split())
+                data.append(float(line.split()[1]))
     print(data)
     for i in range(1, len(data) - 2):
         data[i] = data[i] / 500
     data.append(data[len(data)-1]/27/10000)
+    if args.synthetic == "triba27_uniform_random":
+        data.append("triba27_uniform_random")
+    elif args.synthetic == "triba27_bit_reverse":
+        data.append("triba27_bit_reverse")
+    elif args.synthetic == "triba27_transpose":
+        data.append("triba27_transpose")
     print(data)
     print(len(data))
-    # print(work_sheet.cell(row=2, column=1).value)
     work_sheet.append(data)
     work_book.save("/home/soliman/m5out_stats/m5out_stats.xlsx")
     m5_file.close()
