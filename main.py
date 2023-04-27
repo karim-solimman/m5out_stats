@@ -16,9 +16,9 @@ if __name__ == "__main__":
             "triba27_bit_reverse" or args.synthetic == "triba27_transpose" or args.synthetic == "triba27_tornado")
 
     # open the Excel file that will store the data
-    # work_book = openpyxl.load_workbook(
-    # "/home/soliman/m5out_stats/m5out_stats.xlsx")
-    # work_sheet = work_book["Sheet1"]
+    work_book = openpyxl.load_workbook(
+        "/home/soliman/m5out_stats/m5out_stats.xlsx")
+    work_sheet = work_book["Sheet1"]
 
     # data list that will store the output values from gem5 simulator
     # begin the list with the injection rate
@@ -274,15 +274,15 @@ if __name__ == "__main__":
             if "system.ruby.network.flits_received::total" in line:
                 print(line.split())
                 data.append(float(line.split()[1]))
-    print(data)
-    print(len(data))
-    for i in range(2, len(data) - 2):
+    for i in range(2, len(data) - 4):
         data[i] = data[i] / 500
     # calculate flits dlivery percentage
     data.append(data[len(data)-3] / data[len(data)-4])
     # claculate packets deliver percentage
-    data.append(data[len(data)-3] / data[len(data)-4])
-    # work_sheet.append(data)
-    # work_book.save("/home/soliman/m5out_stats/m5out_stats.xlsx")
-    # m5_file.close()
+    data.append(data[len(data)-2] / data[len(data)-3])
+    print(data)
+    print(len(data))
+    work_sheet.append(data)
+    work_book.save("/home/soliman/m5out_stats/m5out_stats.xlsx")
+    m5_file.close()
     print("Done m5out_stats.py")
