@@ -45,15 +45,26 @@ if __name__ == "__main__":
     m5_file = open("/home/soliman/gem5_nxtspr/gem5/m5out/stats.txt")
 
     for line in m5_file:
+        if "system.ruby.network.packets_injected::total" in line:
+            print(line.split())
+            data.append(float(line.split()[1]))
+        if "system.ruby.network.packets_received::total" in line:
+            print(line.split())
+            data.append(float(line.split()[1]))
+        if "system.ruby.network.flits_injected::total" in line:
+            print(line.split())
+            data.append(float(line.split()[1]))
+        if "system.ruby.network.flits_received::total" in line:
+            print(line.split())
+            data.append(float(line.split()[1]))
         for node in triBA27_m5_nodes:
             for traf in traffic:
                 line_to_search = node + '.' + traf
                 splitted_line = line.split()
                 if line_to_search in splitted_line:
-                    print(splitted_line, len(splitted_line))
+                    # print(splitted_line, len(splitted_line))
                     data.append(float(splitted_line[1]))
-
     work_sheet.append(data)
-    print(data)
+    print(data, len(data))
     m5_file.close()
-    work_book.save("m5out_stats_traffic.xlsx")
+    work_book.save("/home/soliman/m5out_stats/m5out_stats_traffic.xlsx")
