@@ -26,7 +26,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     assert (args.synthetic == "triba27_uniform_random" or args.synthetic ==
-            "triba27_bit_reverse" or args.synthetic == "triba27_transpose" or args.synthetic == "triba27_tornado")
+            "triba27_bit_reverse" or args.synthetic == "triba27_transpose" or args.synthetic == "triba27_tornado" or args.synthetic == "triba27_bit_complement")
 
     # open Excel file to save the data from m5out stats text file generated from gem5 simulator
     work_book = openpyxl.load_workbook(
