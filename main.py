@@ -13,7 +13,8 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     assert (args.synthetic == "triba27_uniform_random" or args.synthetic ==
-            "triba27_bit_reverse" or args.synthetic == "triba27_transpose" or args.synthetic == "triba27_tornado" or args.synthetic == "triba27_bit_complement")
+            "triba27_bit_reverse" or args.synthetic == "triba27_transpose" or args.synthetic == "triba27_tornado"
+            or args.synthetic == "triba27_bit_complement" or args.synthetic == "triba27_shuffle")
 
     # open the Excel file that will store the data
     work_book = openpyxl.load_workbook(
