@@ -18,7 +18,7 @@ if __name__ == "__main__":
 
     # open the Excel file that will store the data
     work_book = openpyxl.load_workbook(
-        "/home/soliman/m5out_stats/m5out_stats.xlsx")
+        "/home/soliman/m5out_stats/m5out_stats_adaptive.xlsx")
     work_sheet = work_book["Sheet1"]
 
     # data list that will store the output values from gem5 simulator
@@ -285,9 +285,11 @@ if __name__ == "__main__":
     data.append(data[12]/data[2]/27)
     # calculate packet recieption rate packet/node/cycle 15/27/3
     data.append(data[14]/27/data[2])
+    # the type of the routing (determenstic / adaptive)
+    data.append("adaptive")
     print(data)
     print(len(data))
     work_sheet.append(data)
-    work_book.save("/home/soliman/m5out_stats/m5out_stats.xlsx")
+    work_book.save("/home/soliman/m5out_stats/m5out_stats_adaptive.xlsx")
     m5_file.close()
     print("Done m5out_stats.py")
