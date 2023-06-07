@@ -31,7 +31,7 @@ if __name__ == "__main__":
 
     # open Excel file to save the data from m5out stats text file generated from gem5 simulator
     work_book = openpyxl.load_workbook(
-        "/home/soliman/m5out_stats/m5out_stats_traffic.xlsx")
+        "/home/soliman/m5out_stats/m5out_stats_adaptive_traffic.xlsx")
     work_sheet = work_book["Sheet1"]
 
     # data list that will store the output values from gem5 simulator
@@ -65,7 +65,9 @@ if __name__ == "__main__":
                 if line_to_search in splitted_line:
                     # print(splitted_line, len(splitted_line))
                     data.append(float(splitted_line[1]))
+    data.append("adaptive")
     work_sheet.append(data)
     print(data, len(data))
     m5_file.close()
-    work_book.save("/home/soliman/m5out_stats/m5out_stats_traffic.xlsx")
+    work_book.save(
+        "/home/soliman/m5out_stats/m5out_stats_adaptive_traffic.xlsx")
