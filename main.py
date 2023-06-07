@@ -275,18 +275,141 @@ if __name__ == "__main__":
             if "system.ruby.network.flits_received::total" in line:
                 print(line.split())
                 data.append(float(line.split()[1]))
+    elif args.synthetic == "triba27_bit_complement":
+        for line in m5_file:
+            if "average_flit_latency" in line:
+                print(line.split())
+                data.append(float(line.split()[1]))
+            if "average_flit_network_latency" in line:
+                print(line.split())
+                data.append(float(line.split()[1]))
+            if "average_flit_queueing_latency" in line:
+                print(line.split())
+                data.append(float(line.split()[1]))
+            if "average_flit_vnet_latency" in line:
+                print(line.split())
+                indexes = []
+                for i in range(len(line)):
+                    if line[i] == '|':
+                        indexes.append(i)
+                indexes.append(line.index('('))
+                v1 = line[indexes[0] + 1:indexes[1] - 1]
+                v2 = line[indexes[1] + 1:indexes[2] - 1]
+                v3 = line[indexes[2] + 1:indexes[3] - 1]
+                v1, v2, v3 = v1.strip(), v2.strip(), v3.strip()
+                print(v1, v2, v3)
+                avg = (float(v1) + float(v2) + float(v3)) / 3.0
+                data.append(avg)
+            if "average_packet_latency" in line:
+                print(line.split())
+                data.append(float(line.split()[1]))
+            if "average_packet_network_latency" in line:
+                print(line.split())
+                data.append(float(line.split()[1]))
+            if "average_packet_queueing_latency" in line:
+                print(line.split())
+                data.append(float(line.split()[1]))
+            if "average_packet_vnet_latency" in line:
+                print(line.split())
+                print(line.split())
+                indexes = []
+                for i in range(len(line)):
+                    if line[i] == '|':
+                        indexes.append(i)
+                indexes.append(line.index('('))
+                v1 = line[indexes[0] + 1:indexes[1] - 1]
+                v2 = line[indexes[1] + 1:indexes[2] - 1]
+                v3 = line[indexes[2] + 1:indexes[3] - 1]
+                v1, v2, v3 = v1.strip(), v2.strip(), v3.strip()
+                print(v1, v2, v3)
+                avg = (float(v1) + float(v2) + float(v3)) / 3.0
+                data.append(avg)
+            if "system.ruby.network.packets_injected::total" in line:
+                print(line.split())
+                data.append(float(line.split()[1]))
+            if "system.ruby.network.packets_received::total" in line:
+                print(line.split())
+                data.append(float(line.split()[1]))
+            if "system.ruby.network.flits_injected::total" in line:
+                print(line.split())
+                data.append(float(line.split()[1]))
+            if "system.ruby.network.flits_received::total" in line:
+                print(line.split())
+                data.append(float(line.split()[1]))
+    elif args.synthetic == "triba27_shuffle":
+        for line in m5_file:
+            if "average_flit_latency" in line:
+                print(line.split())
+                data.append(float(line.split()[1]))
+            if "average_flit_network_latency" in line:
+                print(line.split())
+                data.append(float(line.split()[1]))
+            if "average_flit_queueing_latency" in line:
+                print(line.split())
+                data.append(float(line.split()[1]))
+            if "average_flit_vnet_latency" in line:
+                print(line.split())
+                indexes = []
+                for i in range(len(line)):
+                    if line[i] == '|':
+                        indexes.append(i)
+                indexes.append(line.index('('))
+                v1 = line[indexes[0] + 1:indexes[1] - 1]
+                v2 = line[indexes[1] + 1:indexes[2] - 1]
+                v3 = line[indexes[2] + 1:indexes[3] - 1]
+                v1, v2, v3 = v1.strip(), v2.strip(), v3.strip()
+                print(v1, v2, v3)
+                avg = (float(v1) + float(v2) + float(v3)) / 3.0
+                data.append(avg)
+            if "average_packet_latency" in line:
+                print(line.split())
+                data.append(float(line.split()[1]))
+            if "average_packet_network_latency" in line:
+                print(line.split())
+                data.append(float(line.split()[1]))
+            if "average_packet_queueing_latency" in line:
+                print(line.split())
+                data.append(float(line.split()[1]))
+            if "average_packet_vnet_latency" in line:
+                print(line.split())
+                print(line.split())
+                indexes = []
+                for i in range(len(line)):
+                    if line[i] == '|':
+                        indexes.append(i)
+                indexes.append(line.index('('))
+                v1 = line[indexes[0] + 1:indexes[1] - 1]
+                v2 = line[indexes[1] + 1:indexes[2] - 1]
+                v3 = line[indexes[2] + 1:indexes[3] - 1]
+                v1, v2, v3 = v1.strip(), v2.strip(), v3.strip()
+                print(v1, v2, v3)
+                avg = (float(v1) + float(v2) + float(v3)) / 3.0
+                data.append(avg)
+            if "system.ruby.network.packets_injected::total" in line:
+                print(line.split())
+                data.append(float(line.split()[1]))
+            if "system.ruby.network.packets_received::total" in line:
+                print(line.split())
+                data.append(float(line.split()[1]))
+            if "system.ruby.network.flits_injected::total" in line:
+                print(line.split())
+                data.append(float(line.split()[1]))
+            if "system.ruby.network.flits_received::total" in line:
+                print(line.split())
+                data.append(float(line.split()[1]))
     for i in range(2, len(data) - 4):
         data[i] = data[i] / 500
     # calculate flits dlivery percentage
     data.append(data[len(data)-3] / data[len(data)-4])
-    # claculate packets deliver percentage
+    # claculate packets delivery percentage
+    print(data)
     data.append(data[len(data)-2] / data[len(data)-3])
     # calculate packet throughput flit/cycle/node 13/3/27
     data.append(data[12]/data[2]/27)
     # calculate packet recieption rate packet/node/cycle 15/27/3
     data.append(data[14]/27/data[2])
     # the type of the routing (determenstic / adaptive)
-    data.append("adaptive")
+    data.append("deterministic")
     print(data)
     print(len(data))
     work_sheet.append(data)
