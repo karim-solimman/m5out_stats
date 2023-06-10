@@ -65,7 +65,7 @@ if __name__ == "__main__":
                 if line_to_search in splitted_line:
                     # print(splitted_line, len(splitted_line))
                     data.append(float(splitted_line[1]))
-    data.append("adaptive")
+    data.append("deterministic")
     work_sheet.append(data)
     print(data, len(data))
     m5_file.close()
