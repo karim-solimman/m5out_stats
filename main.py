@@ -104,7 +104,7 @@ if __name__ == "__main__":
     # calculate packet recieption rate packet/node/cycle 15/27/3
     data.append(data[14]/27/data[2])
     # the type of the routing (determenstic / adaptive)
-    data.append("deterministic")
+    data.append("adaptive")
     print(data)
     print(len(data))
     work_sheet.append(data)
