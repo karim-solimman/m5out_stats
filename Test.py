@@ -1,4 +1,3 @@
 if __name__ == "__main__":
-    count = 0
-    for i in range(5000, 29001, 1000):
-        print(i*500, end=" ")
+    for i in range(1, 201):
+        print(i/1000, end=" ")
