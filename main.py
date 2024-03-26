@@ -17,7 +17,7 @@ if __name__ == "__main__":
             or args.synthetic == "triba27_bit_complement" or args.synthetic == "triba27_shuffle")
 
     # open the Excel file that will store the data
-    work_book = openpyxl.load_workbook("/home/soliman/m5out_stats/2024_m5out_stats_0.2.xlsx")
+    work_book = openpyxl.load_workbook("/home/soliman/m5out_stats/2024_m5out_stats.xlsx")
     work_sheet = work_book["Sheet1"]
 
     # data list that will store the output values from gem5 simulator
@@ -103,10 +103,12 @@ if __name__ == "__main__":
     # calculate packet recieption rate packet/node/cycle 15/27/3
     data.append(data[14]/27/data[2])
     # the type of the routing (determenstic dm4t / semi_adaptive / adaptive)
-    data.append("adaptive")
+    data.append("semi_adaptive")
+    # the number of vcs_per_vnet in the simulation
+    data.append(3)
     print(data)
     print(len(data))
     work_sheet.append(data)
-    work_book.save("/home/soliman/m5out_stats/2024_m5out_stats_0.2.xlsx")
+    work_book.save("/home/soliman/m5out_stats/2024_m5out_stats.xlsx")
     m5_file.close()
     print("Done m5out_stats.py")
