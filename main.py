@@ -103,7 +103,7 @@ if __name__ == "__main__":
     # calculate packet recieption rate packet/node/cycle 15/27/3
     data.append(data[14]/27/data[2])
     # the type of the routing (determenstic dm4t / semi_adaptive / adaptive)
-    data.append("dm4t")
+    data.append("adaptive")
     # the number of vcs_per_vnet in the simulation
     data.append(4)
     print(data)
