@@ -17,7 +17,7 @@ if __name__ == "__main__":
             or args.synthetic == "triba27_bit_complement" or args.synthetic == "triba27_shuffle")
 
     # open the Excel file that will store the data
-    work_book = openpyxl.load_workbook("/home/soliman/m5out_stats/2024_m5out_stats.xlsx")
+    work_book = openpyxl.load_workbook("/home/soliman/m5out_stats/2024_m5out_stats_0.2.xlsx")
     work_sheet = work_book["Sheet1"]
 
     # data list that will store the output values from gem5 simulator
@@ -109,6 +109,6 @@ if __name__ == "__main__":
     print(data)
     print(len(data))
     work_sheet.append(data)
-    work_book.save("/home/soliman/m5out_stats/2024_m5out_stats.xlsx")
+    work_book.save("/home/soliman/m5out_stats/2024_m5out_stats_0.2.xlsx")
     m5_file.close()
     print("Done m5out_stats.py")
