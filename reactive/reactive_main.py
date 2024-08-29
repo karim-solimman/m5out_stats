@@ -12,8 +12,8 @@ def get_routing_info(dir_name):
 
 if __name__ == '__main__':
     print("Start reading data...")
-    directory = "/home/soliman/m5out_stats/reactive/ddra"
-    routing_algorithm = "ddra"
+    routing_algorithm = "dm4t"
+    directory = f"/home/soliman/m5out_stats/reactive/{routing_algorithm}"
     sim_cycles = 12500000
     files_count = 0
     
