@@ -52,6 +52,41 @@ if __name__ == '__main__':
                     print(v1, v2, v3)
                     avg = (float(v1) + float(v2) + float(v3)) / 3.0
                     data.append(avg)
+                if "average_packet_latency" in line:
+                    print(line.split())
+                    data.append(float(line.split()[1]))
+                if "average_packet_network_latency" in line:
+                    print(line.split())
+                    data.append(float(line.split()[1]))
+                if "average_packet_queueing_latency" in line:
+                    print(line.split())
+                    data.append(float(line.split()[1]))
+                if "average_packet_vnet_latency" in line:
+                    print(line.split())
+                    indexes = []
+                    for i in range(len(line)):
+                        if line[i] == '|':
+                            indexes.append(i)
+                    indexes.append(line.index('('))
+                    v1 = line[indexes[0] + 1:indexes[1] - 1]
+                    v2 = line[indexes[1] + 1:indexes[2] - 1]
+                    v3 = line[indexes[2] + 1:indexes[3] - 1]
+                    v1, v2, v3 = v1.strip(), v2.strip(), v3.strip()
+                    print(v1, v2, v3)
+                    avg = (float(v1) + float(v2) + float(v3)) / 3.0
+                    data.append(avg)
+                if "system.ruby.network.packets_injected::total" in line:
+                    print(line.split())
+                    data.append(float(line.split()[1]))
+                if "system.ruby.network.packets_received::total" in line:
+                    print(line.split())
+                    data.append(float(line.split()[1]))
+                if "system.ruby.network.flits_injected::total" in line:
+                    print(line.split())
+                    data.append(float(line.split()[1]))
+                if "system.ruby.network.flits_received::total" in line:
+                    print(line.split())
+                    data.append(float(line.split()[1]))
         print(index, synthetic_traffic, injection_rate, "Done")
     
     print(len(next(os.walk(directory))[1]), "Done saving data")
