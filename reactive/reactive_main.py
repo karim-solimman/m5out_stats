@@ -1,12 +1,13 @@
 import openpyxl
 import os
 
+
 syn_traffics = ["triba27_uniform_random", "triba27_bit_reverse", "triba27_transpose",
                  "triba27_tornado", "triba27_bit_complement", "triba27_shuffle" ]
 
 def get_routing_info(dir_name):
     tmp_name = dir_name.split('0', 1)
-    return tmp_name[0][:-1], '0' + tmp_name[1]
+    return tmp_name[0][:-1], float('0' + tmp_name[1])
 
 
 if __name__ == '__main__':
@@ -15,18 +16,24 @@ if __name__ == '__main__':
     routing_algorithm = "ddra"
     sim_cycles = 12500000
     
-    # create the excel sheet for collecting the data from the stats files
-    wb = openpyxl.Workbook()
-    ws = wb.active
+    # excel sheet
+    # check if exists first, otherwise create a new one for collecting the data from the stats files
     ws_header = ["#", "routing algorithm", "synthetic traffic", "injection rate", "sim cycles",
                   "average_flit_latency", "average_flit_network_latency", "flit_queuing_latency",
-                    "average_flit_vnet_latency", "average_packet_latency", "average_packet_network_latency",
-                    "average_packet_queueing_latency", "average_packet_vnet_latency", "Flits_inject",
-                    "Flits_received", "Pkt_inject", "Pkt_received", "Flits_delivery_perc", "Pkt_delivery_perc",
-                    "throughput", "receiption_rate", "ext_in_link_utilization", "ext_out_link_utilization",
-                    "int_link_utilization", "average_hops", "average_link_utilization", "average_vc_load"]
-    ws.append(ws_header)
-   
+                    "average_flit_vnet_latency", "average_hops", "average_packet_latency", "average_packet_network_latency",
+                    "average_packet_queueing_latency", "average_packet_vnet_latency", "average_link_utilization",
+                    "average_vc_load", "ext_in_link_utilization", "ext_out_link_utilization",
+                    "Flits_inject", "Flits_received", "int_link_utilization", "Pkt_inject", "Pkt_received", 
+                    "Flits_delivery_perc", "Pkt_delivery_perc", "throughput", "receiption_rate",]
+    if(os.path.isfile(f"./{routing_algorithm}.xlsx")):
+        print("Excel existed...")
+        wb = openpyxl.load_workbook(f"./{routing_algorithm}.xlsx")
+        ws = wb.active
+    else:
+        wb = openpyxl.Workbook()
+        ws = wb.active
+        ws.append(ws_header)
+    
     for index, file in enumerate(os.listdir(directory)):
         synthetic_traffic, injection_rate = get_routing_info(file)
         stats_path = f"{directory}/{file}/stats.txt"
@@ -34,12 +41,16 @@ if __name__ == '__main__':
         print(file, stats_path)
         with open(stats_path) as stats_file:
             for line in stats_file:
+                # index 5
                 if "average_flit_latency" in line:
                     data.append(float(line.split()[1]))
+                # index 6
                 if "average_flit_network_latency" in line:
                     data.append(float(line.split()[1]))
+                # index 7
                 if "average_flit_queueing_latency" in line:
                     data.append(float(line.split()[1]))
+                # index 8
                 if "average_flit_vnet_latency" in line:
                     indexes = []
                     for i in range(len(line)):
@@ -50,15 +61,18 @@ if __name__ == '__main__':
                     v2 = line[indexes[1] + 1:indexes[2] - 1]
                     v3 = line[indexes[2] + 1:indexes[3] - 1]
                     v1, v2, v3 = v1.strip(), v2.strip(), v3.strip()
-                    print(v1, v2, v3)
                     avg = (float(v1) + float(v2) + float(v3)) / 3.0
                     data.append(avg)
+                # index 9
                 if "average_packet_latency" in line:
                     data.append(float(line.split()[1]))
+                # index 10
                 if "average_packet_network_latency" in line:
                     data.append(float(line.split()[1]))
+                # index 11
                 if "average_packet_queueing_latency" in line:
                     data.append(float(line.split()[1]))
+                # index 12
                 if "average_packet_vnet_latency" in line:
                     indexes = []
                     for i in range(len(line)):
@@ -69,33 +83,56 @@ if __name__ == '__main__':
                     v2 = line[indexes[1] + 1:indexes[2] - 1]
                     v3 = line[indexes[2] + 1:indexes[3] - 1]
                     v1, v2, v3 = v1.strip(), v2.strip(), v3.strip()
-                    print(v1, v2, v3)
                     avg = (float(v1) + float(v2) + float(v3)) / 3.0
                     data.append(avg)
+                # index 13
                 if "system.ruby.network.packets_injected::total" in line:
-                    data.append(float(line.split()[1]))
+                    data.append(int(line.split()[1]))
+                # index 14
                 if "system.ruby.network.packets_received::total" in line:
-                    data.append(float(line.split()[1]))
+                    data.append(int(line.split()[1]))
+                # index 15
                 if "system.ruby.network.flits_injected::total" in line:
-                    data.append(float(line.split()[1]))
+                    data.append(int(line.split()[1]))
+                # index 16
                 if "system.ruby.network.flits_received::total" in line:
+                    data.append(int(line.split()[1]))
+                # index 17
+                if "system.ruby.network.ext_in_link_utilization" in line:
+                    data.append(int(line.split()[1]))
+                # index 18
+                if "system.ruby.network.ext_out_link_utilization" in line:
+                    data.append(int(line.split()[1]))
+                # index 19
+                if "system.ruby.network.int_link_utilization" in line:
+                    data.append(int(line.split()[1]))
+                # index 20
+                if "system.ruby.network.average_hops" in line:
+                    data.append(float(line.split()[1]))
+                # index 21
+                if "system.ruby.network.avg_link_utilization" in line:
+                    data.append(float(line.split()[1]))
+                # index 22
+                if "system.ruby.network.avg_vc_load::total" in line:
                     data.append(float(line.split()[1]))
             # Convert from ticks to cycles
-            for i in range(4, len(data) - 4):
-                data[i] = data[i] / 500
-            # calculate flits dlivery percentage
+            # for i in range(4, len(data) - 10):
+                # data[i] = data[i] / 500
             print(len(data), data)
-            data.append(data[len(data)-3] / data[len(data)-4])
+            # calculate flits dlivery percentage
+            data.append(data[16] / data[15])
             # claculate packets delivery percentage
-            data.append(data[len(data)-2] / data[len(data)-3])
-            # calculate packet throughput flit/cycle/node 13/3/27
-            data.append(data[12]/data[4]/27)
-            # calculate packet recieption rate packet/node/cycle 15/27/3
+            data.append(data[14] / data [13])
+            # calculate packet throughput flit/cycle/node
+            data.append(data[16]/data[4]/27)
+            # calculate packet recieption rate packet/node/cycle
             data.append(data[14]/27/data[4])
+
         print(index + 1, synthetic_traffic, injection_rate, "Done")
-        if index > 1:
+        if index == 0:
             break
     print(len(next(os.walk(directory))[1]), "Done saving data")
+    ws.append(data)
     wb.save(f"{routing_algorithm}.xlsx")
 
 
