@@ -13,7 +13,7 @@ if __name__ == '__main__':
     print("Start reading data...")
     directory = "/home/soliman/m5out_stats/reactive/ddra"
     routing_algorithm = "ddra"
-    sim_cycles = 25000
+    sim_cycles = 12500000
     
     # create the excel sheet for collecting the data from the stats files
     wb = openpyxl.Workbook()
@@ -53,16 +53,12 @@ if __name__ == '__main__':
                     avg = (float(v1) + float(v2) + float(v3)) / 3.0
                     data.append(avg)
                 if "average_packet_latency" in line:
-                    print(line.split())
                     data.append(float(line.split()[1]))
                 if "average_packet_network_latency" in line:
-                    print(line.split())
                     data.append(float(line.split()[1]))
                 if "average_packet_queueing_latency" in line:
-                    print(line.split())
                     data.append(float(line.split()[1]))
                 if "average_packet_vnet_latency" in line:
-                    print(line.split())
                     indexes = []
                     for i in range(len(line)):
                         if line[i] == '|':
@@ -76,19 +72,26 @@ if __name__ == '__main__':
                     avg = (float(v1) + float(v2) + float(v3)) / 3.0
                     data.append(avg)
                 if "system.ruby.network.packets_injected::total" in line:
-                    print(line.split())
                     data.append(float(line.split()[1]))
                 if "system.ruby.network.packets_received::total" in line:
-                    print(line.split())
                     data.append(float(line.split()[1]))
                 if "system.ruby.network.flits_injected::total" in line:
-                    print(line.split())
                     data.append(float(line.split()[1]))
                 if "system.ruby.network.flits_received::total" in line:
-                    print(line.split())
                     data.append(float(line.split()[1]))
-        print(index, synthetic_traffic, injection_rate, "Done")
-    
+                for i in range(4, len(data) - 4):
+                    data[i] = data[i] / 500
+                # calculate flits dlivery percentage
+                data.append(data[len(data)-3] / data[len(data)-4])
+                # claculate packets delivery percentage
+                data.append(data[len(data)-2] / data[len(data)-3])
+                # calculate packet throughput flit/cycle/node 13/3/27
+                data.append(data[12]/data[4]/27)
+                # calculate packet recieption rate packet/node/cycle 15/27/3
+                data.append(data[14]/27/data[4])
+        print(index + 1, synthetic_traffic, injection_rate, "Done")
+        if index > 1:
+            break
     print(len(next(os.walk(directory))[1]), "Done saving data")
     wb.save(f"{routing_algorithm}.xlsx")
 
