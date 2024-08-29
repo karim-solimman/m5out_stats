@@ -37,19 +37,19 @@ if __name__ == '__main__':
     for index, file in enumerate(os.listdir(directory)):
         synthetic_traffic, injection_rate = get_routing_info(file)
         stats_path = f"{directory}/{file}/stats.txt"
-        data = [index + 1, routing_algorithm, synthetic_traffic, injection_rate, sim_cycles]
+        data = [index + 1, routing_algorithm, synthetic_traffic, injection_rate, sim_cycles / 500]
         print(file, stats_path)
         with open(stats_path) as stats_file:
             for line in stats_file:
                 # index 5
                 if "average_flit_latency" in line:
-                    data.append(float(line.split()[1]))
+                    data.append(float(line.split()[1]) / 500)
                 # index 6
                 if "average_flit_network_latency" in line:
-                    data.append(float(line.split()[1]))
+                    data.append(float(line.split()[1]) / 500)
                 # index 7
                 if "average_flit_queueing_latency" in line:
-                    data.append(float(line.split()[1]))
+                    data.append(float(line.split()[1]) / 500)
                 # index 8
                 if "average_flit_vnet_latency" in line:
                     indexes = []
@@ -62,16 +62,16 @@ if __name__ == '__main__':
                     v3 = line[indexes[2] + 1:indexes[3] - 1]
                     v1, v2, v3 = v1.strip(), v2.strip(), v3.strip()
                     avg = (float(v1) + float(v2) + float(v3)) / 3.0
-                    data.append(avg)
+                    data.append(avg / 500)
                 # index 9
                 if "average_packet_latency" in line:
-                    data.append(float(line.split()[1]))
+                    data.append(float(line.split()[1]) / 500)
                 # index 10
                 if "average_packet_network_latency" in line:
-                    data.append(float(line.split()[1]))
+                    data.append(float(line.split()[1]) / 500)
                 # index 11
                 if "average_packet_queueing_latency" in line:
-                    data.append(float(line.split()[1]))
+                    data.append(float(line.split()[1]) / 500)
                 # index 12
                 if "average_packet_vnet_latency" in line:
                     indexes = []
@@ -84,7 +84,7 @@ if __name__ == '__main__':
                     v3 = line[indexes[2] + 1:indexes[3] - 1]
                     v1, v2, v3 = v1.strip(), v2.strip(), v3.strip()
                     avg = (float(v1) + float(v2) + float(v3)) / 3.0
-                    data.append(avg)
+                    data.append(avg / 500)
                 # index 13
                 if "system.ruby.network.packets_injected::total" in line:
                     data.append(int(line.split()[1]))
@@ -115,18 +115,15 @@ if __name__ == '__main__':
                 # index 22
                 if "system.ruby.network.avg_vc_load::total" in line:
                     data.append(float(line.split()[1]))
-            # Convert from ticks to cycles
-            # for i in range(4, len(data) - 10):
-                # data[i] = data[i] / 500
             print(len(data), data)
             # calculate flits dlivery percentage
-            data.append(data[16] / data[15])
+            data.append(data[19] / data[18])
             # claculate packets delivery percentage
-            data.append(data[14] / data [13])
+            data.append(data[22] / data [21])
             # calculate packet throughput flit/cycle/node
-            data.append(data[16]/data[4]/27)
+            data.append(data[19]/data[4]/27)
             # calculate packet recieption rate packet/node/cycle
-            data.append(data[14]/27/data[4])
+            data.append(data[22]/27/data[4])
 
         print(index + 1, synthetic_traffic, injection_rate, "Done")
         if index == 0:
