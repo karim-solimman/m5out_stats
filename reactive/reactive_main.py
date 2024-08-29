@@ -15,6 +15,7 @@ if __name__ == '__main__':
     directory = "/home/soliman/m5out_stats/reactive/ddra"
     routing_algorithm = "ddra"
     sim_cycles = 12500000
+    files_count = 0
     
     # excel sheet
     # check if exists first, otherwise create a new one for collecting the data from the stats files
@@ -115,7 +116,7 @@ if __name__ == '__main__':
                 # index 22
                 if "system.ruby.network.avg_vc_load::total" in line:
                     data.append(float(line.split()[1]))
-            print(len(data), data)
+            # print(len(data), data)
             # calculate flits dlivery percentage
             data.append(data[19] / data[18])
             # claculate packets delivery percentage
@@ -124,12 +125,11 @@ if __name__ == '__main__':
             data.append(data[19]/data[4]/27)
             # calculate packet recieption rate packet/node/cycle
             data.append(data[22]/27/data[4])
-
-        print(index + 1, synthetic_traffic, injection_rate, "Done")
-        if index == 0:
-            break
-    print(len(next(os.walk(directory))[1]), "Done saving data")
-    ws.append(data)
+        print(index + 1, synthetic_traffic, injection_rate, "... Done")
+        # store the file count
+        files_count = index + 1
+        ws.append(data)
+    print(files_count, " .. Done saving data")
     wb.save(f"{routing_algorithm}.xlsx")
 
 
