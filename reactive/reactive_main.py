@@ -31,6 +31,7 @@ if __name__ == '__main__':
         synthetic_traffic, injection_rate = get_routing_info(file)
         stats_path = f"{directory}/{file}/stats.txt"
         data = [index + 1, routing_algorithm, synthetic_traffic, injection_rate, sim_cycles]
+        print(file, stats_path)
         with open(stats_path) as stats_file:
             for line in stats_file:
                 if "average_flit_latency" in line:
@@ -79,16 +80,18 @@ if __name__ == '__main__':
                     data.append(float(line.split()[1]))
                 if "system.ruby.network.flits_received::total" in line:
                     data.append(float(line.split()[1]))
-                for i in range(4, len(data) - 4):
-                    data[i] = data[i] / 500
-                # calculate flits dlivery percentage
-                data.append(data[len(data)-3] / data[len(data)-4])
-                # claculate packets delivery percentage
-                data.append(data[len(data)-2] / data[len(data)-3])
-                # calculate packet throughput flit/cycle/node 13/3/27
-                data.append(data[12]/data[4]/27)
-                # calculate packet recieption rate packet/node/cycle 15/27/3
-                data.append(data[14]/27/data[4])
+            # Convert from ticks to cycles
+            for i in range(4, len(data) - 4):
+                data[i] = data[i] / 500
+            # calculate flits dlivery percentage
+            print(len(data), data)
+            data.append(data[len(data)-3] / data[len(data)-4])
+            # claculate packets delivery percentage
+            data.append(data[len(data)-2] / data[len(data)-3])
+            # calculate packet throughput flit/cycle/node 13/3/27
+            data.append(data[12]/data[4]/27)
+            # calculate packet recieption rate packet/node/cycle 15/27/3
+            data.append(data[14]/27/data[4])
         print(index + 1, synthetic_traffic, injection_rate, "Done")
         if index > 1:
             break
