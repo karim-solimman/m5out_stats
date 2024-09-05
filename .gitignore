@@ -14,3 +14,5 @@
 /reactive/throughput-dm4t-randomEqual-modified
 /reactive/throughput-full-adaptive
 /reactive/throughput-full-adaptive-randomEqual
+/reactive/throughput-semi-adaptive
+/reactive/_full-system-blackscholes
