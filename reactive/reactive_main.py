@@ -3,7 +3,7 @@ import os
 
 
 syn_traffics = ["triba27_uniform_random", "triba27_bit_reverse", "triba27_transpose",
-                 "triba27_tornado", "triba27_bit_complement", "triba27_shuffle" ]
+                 "triba27_tornado", "triba27_bit_complement", "triba27_shuffle"]
 
 def get_routing_info(dir_name):
     tmp_name = dir_name.split('0', 1)
@@ -12,7 +12,7 @@ def get_routing_info(dir_name):
 
 if __name__ == '__main__':
     print("Start reading data...")
-    routing_algorithm = "dm4t"
+    routing_algorithm = "vcDepth-4-full-adaptive"
     directory = f"/home/soliman/m5out_stats/reactive/{routing_algorithm}"
     sim_cycles = 12500000
     files_count = 0
