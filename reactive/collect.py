@@ -23,13 +23,13 @@ if __name__ == '__main__':
     # data extraction
     extension = '.xlsx'
     extracted_data = "average_packet_latency"
-    syn_traffic = "triba27_uniform_random"
+    syn_traffic = "triba27_bit_reverse"
     
     # select xlsx files [not throughput files]
     all_files = os.listdir("./")
     xlsx_files = []
     for file in all_files:
-        if file.endswith(extension) and not "throughput" in file:
+        if file.endswith(extension) and not "throughput" in file and not "full-system" in file:
             xlsx_files.append(file)
     xlsx_files.sort()
 
