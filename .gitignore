@@ -15,7 +15,8 @@
 /reactive/throughput-full-adaptive
 /reactive/throughput-full-adaptive-randomEqual
 /reactive/throughput-semi-adaptive
-/reactive/_full-system-blackscholes
 /reactive/throughput-semi-adaptive-randomEqual
 /reactive/throughput-semi-adaptive-randomEqual-modified
+/reactive/ddra-vcDepth-4
+/reactive/_full-system-blackscholes
 /reactive/_full-system-bodytrack
