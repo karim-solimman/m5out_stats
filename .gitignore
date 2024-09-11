@@ -37,3 +37,12 @@
 /reactive/vcDepth-4-throughput-semi-adaptive-randomEqual-modified
 /reactive/_full-system-blackscholes
 /reactive/_full-system-bodytrack
+/reactive/_full-system-canneal
+/reactive/_full-system-dedup
+/reactive/_full-system-ferret
+/reactive/_full-system-fluidanimate
+/reactive/_full-system-freqmine
+/reactive/_full-system-streamcluster
+/reactive/_full-system-swaptions
+/reactive/_full-system-vips
+/reactive/_full-system-x264
