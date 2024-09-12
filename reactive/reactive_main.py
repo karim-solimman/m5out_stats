@@ -12,7 +12,7 @@ def get_routing_info(dir_name):
 
 if __name__ == '__main__':
     print("Start reading data...")
-    routing_algorithm = "vcDepth-4-full-adaptive"
+    routing_algorithm = "vcDepth-4-throughput-semi-adaptive-randomEqual-modified"
     directory = f"/home/soliman/m5out_stats/reactive/{routing_algorithm}"
     sim_cycles = 12500000
     files_count = 0

@@ -1,7 +1,7 @@
 import os
 import openpyxl
 
-ws_header = ["#", "routing algorithm", "sim cycles", "sim time"
+ws_header = ["#", "routing algorithm", "sim cycles", "sim time",
                   "average_flit_latency", "average_flit_network_latency", "flit_queuing_latency",
                     "average_flit_vnet_latency", "average_hops", "average_packet_latency", "average_packet_network_latency",
                     "average_packet_queueing_latency", "average_packet_vnet_latency", "average_link_utilization",

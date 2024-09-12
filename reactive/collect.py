@@ -22,14 +22,16 @@ if __name__ == '__main__':
 
     # data extraction
     extension = '.xlsx'
-    extracted_data = "average_packet_latency"
-    syn_traffic = "triba27_bit_reverse"
+    extracted_data = "average_hops"
+    syn_traffic = "triba27_shuffle"
+    full_inj_rate = True
     
     # select xlsx files [not throughput files]
     all_files = os.listdir("./")
     xlsx_files = []
     for file in all_files:
-        if file.endswith(extension) and not "throughput" in file and not "full-system" in file:
+        if file.endswith(extension) and "throughput" in file and not "full-system" in file:
+            print(file)
             xlsx_files.append(file)
     xlsx_files.sort()
 
@@ -48,12 +50,22 @@ if __name__ == '__main__':
     # collecting data
     print("Collecting data...")
     output_data = dict()
-    for i in range(5, 205, 5):
-        inj_rates.append(i/1000)
-        output_data[str(i/1000)] = dict()
-        for file in xlsx_files:
-            routing_algorithm = file.split('.')[0]
-            output_data[str(i/1000)][routing_algorithm] = 0.0
+    if full_inj_rate:
+        print(f"Throughput injections rates ...")
+        for i in range(5, 105, 5):
+            inj_rates.append(i/100)
+            output_data[str(i/100)] = dict()
+            for file in xlsx_files:
+                routing_algorithm = file.split('.')[0]
+                output_data[str(i/100)][routing_algorithm] = 0.0
+    else:
+        for i in range(5, 205, 5):
+            inj_rates.append(i/1000)
+            output_data[str(i/1000)] = dict()
+            for file in xlsx_files:
+                routing_algorithm = file.split('.')[0]
+                output_data[str(i/1000)][routing_algorithm] = 0.0
+    print(output_data.keys())
     
     # prepare the data in dictionary format
     for file in xlsx_files:
@@ -67,6 +79,9 @@ if __name__ == '__main__':
             if tmp_wc.cell(row= i + 1, column = 3).value == syn_traffic:
                 inj_rate = tmp_wc.cell(row= i + 1, column=injection_rate_column + 1).value
                 collected_data = tmp_wc.cell(row=i + 1, column=data_column + 1).value
+                if inj_rate == 1:
+                    inj_rate = '1.0'
+                # print(str(inj_rate), routing_algorithm)
                 output_data[str(inj_rate)][routing_algorithm] = collected_data
         tmp_wb.close()
 
