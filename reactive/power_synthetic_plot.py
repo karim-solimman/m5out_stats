@@ -9,7 +9,7 @@ routing_algorithms = [
     "full-adaptive-randomEqual",
     "semi-adaptive",
     "semi-adaptive-randomEqual",
-    "semi-adaptive-randomEqual-modified"
+    "semi-adaptive-randomEqual-modified",
 ]
 
 synthetic_traffics = [
@@ -22,8 +22,8 @@ synthetic_traffics = [
 ]
 
 if __name__ == "__main__":
-    synthetic_traffic = "bit_reverse"
-    target_data = "routers_buffer_dynamic"
+    synthetic_traffic = "transpose"
+    target_data = "routers_total_dynamic"
 
     output_wb = openpyxl.Workbook()
     output_ws = output_wb.active
