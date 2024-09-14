@@ -31,8 +31,6 @@ if __name__ == "__main__":
     output_header = ["#", "injection_rate"] + routing_algorithms
     output_data = {key:[] for key in routing_algorithms}
     output_ws.append(output_header)
-    print(output_data)
-    print(output_header)
     
     for index, routing_algo in enumerate(routing_algorithms):
         excel_file = f"power_throughput-{routing_algo}.xlsx"
@@ -51,7 +49,7 @@ if __name__ == "__main__":
             if synthetic_traffic in ws.cell(row=i, column=3).value:
                 output_data[routing_algo].append(ws.cell(row=i, column=data_column).value)
 
-        print(excel_file,data_column, ws.max_column)
+        print(excel_file, "Done...")
         wb.close()
 
     injection_rates = [i/100 for i in range(5, 105, 5)]
