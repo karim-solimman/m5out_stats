@@ -22,8 +22,9 @@ synthetic_traffics = [
 ]
 
 if __name__ == "__main__":
-    synthetic_traffic = "transpose"
-    target_data = "routers_total_dynamic"
+    synthetic_traffic = "uniform_random"
+    target_data = "routers_buffer_dynamic"
+    vc_4_depth_enable = True
 
     output_wb = openpyxl.Workbook()
     output_ws = output_wb.active
@@ -33,7 +34,10 @@ if __name__ == "__main__":
     output_ws.append(output_header)
     
     for index, routing_algo in enumerate(routing_algorithms):
-        excel_file = f"power_throughput-{routing_algo}.xlsx"
+        if vc_4_depth_enable:
+            excel_file = f"power_vcDepth-4-throughput-{routing_algo}.xlsx"
+        else:
+            excel_file = f"power_throughput-{routing_algo}.xlsx"
         wb = openpyxl.load_workbook(excel_file)
         ws = wb["Sheet"]
         data_column = -1
