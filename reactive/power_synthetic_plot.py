@@ -22,8 +22,8 @@ synthetic_traffics = [
 ]
 
 if __name__ == "__main__":
-    synthetic_traffic = "uniform_random"
-    target_data = "routers_buffer_dynamic"
+    synthetic_traffic = "shuffle"
+    target_data = "routers_crossbar_dynamic"
     vc_4_depth_enable = True
 
     output_wb = openpyxl.Workbook()
