@@ -62,7 +62,11 @@ if __name__ == "__main__":
         for rout_algo in routing_algorithms:
             data.append(output_data[rout_algo][index])
         output_ws.append(data)
-    output_wb.save(f"{target_data}_{synthetic_traffic}.xlsx")
+    
+    if vc_4_depth_enable:
+        output_wb.save(f"vcDepth_4-{target_data}_{synthetic_traffic}.xlsx")
+    else:
+        output_wb.save(f"{target_data}_{synthetic_traffic}.xlsx")
     print("Output_successfully...")
 
     
