@@ -22,9 +22,9 @@ synthetic_traffics = [
 ]
 
 if __name__ == "__main__":
-    synthetic_traffic = "shuffle"
-    target_data = "routers_crossbar_dynamic"
-    vc_4_depth_enable = True
+    synthetic_traffic = "transpose"
+    target_data = "routers_sw_dynamic"
+    vc_4_depth_enable = False
 
     output_wb = openpyxl.Workbook()
     output_ws = output_wb.active
